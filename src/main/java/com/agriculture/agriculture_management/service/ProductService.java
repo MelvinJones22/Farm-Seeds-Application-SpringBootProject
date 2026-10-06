@@ -54,4 +54,14 @@ public class ProductService {
 	public List<Product> searchProductsByName(String name) {
 	    return productRepository.findByNameContaining(name);
 	}
+	
+	public Product addStock(Long productId, Integer quantity) {
+
+	    Product product = productRepository.findById(productId)
+	            .orElseThrow(() -> new RuntimeException("Product not found"));
+
+	    product.setQuantity(product.getQuantity() + quantity);
+
+	    return productRepository.save(product);
+	}
 }

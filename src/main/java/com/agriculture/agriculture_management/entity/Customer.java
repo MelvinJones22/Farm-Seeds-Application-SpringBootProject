@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Pattern;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 @Entity
 public class Customer {
@@ -24,6 +26,7 @@ public class Customer {
 	
 	@NotBlank(message = "Password cannot be blank")
 	@Size(min = 6, message = "Password must be at least 6 characters")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	
 	@NotBlank(message = "Phone cannot be blank")

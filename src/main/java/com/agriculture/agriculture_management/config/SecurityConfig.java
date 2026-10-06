@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.http.HttpMethod;
 
 
 @Configuration
@@ -36,7 +37,10 @@ public class SecurityConfig {
             
             .authorizeHttpRequests(auth -> auth
             	    .requestMatchers("/customers", "/customers/login").permitAll()
+            	    .requestMatchers(HttpMethod.PUT, "/products/*/stock").hasRole("STAFF")
             	    .requestMatchers("/products/**").hasRole("CUSTOMER")
+            	    .requestMatchers(HttpMethod.GET, "/orders").hasRole("STAFF")
+            	    .requestMatchers(HttpMethod.PUT, "/orders/*/status").hasRole("STAFF")
             	    .anyRequest().authenticated()
             	)
             .oauth2ResourceServer(oauth2 -> oauth2

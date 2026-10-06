@@ -6,6 +6,8 @@ import com.agriculture.agriculture_management.service.ProductService;
 
 
 import java.util.List;
+
+import com.agriculture.agriculture_management.dto.StockUpdateRequest;
 import com.agriculture.agriculture_management.entity.Product;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,5 +68,13 @@ public class ProductController {
     @GetMapping("/search")
     public List<Product> searchProducts(@RequestParam String name) {
         return productService.searchProductsByName(name);
+    }
+    
+    @PutMapping("/{id}/stock")
+    public Product addStock(
+            @PathVariable Long id,
+            @Valid @RequestBody StockUpdateRequest request) {
+
+        return productService.addStock(id, request.getQuantity());
     }
 }
